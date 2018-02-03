@@ -3,20 +3,34 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Shop {
+    private static int nextId = 0;
+
+    int id;
     String name;
-    String address;
+    Address address;
     List<ProductDetails> productsList;
-    String type;
+    List<String> types;
     List<Service> servicesList;
     List<Employee> employeesList;
 
-    public Shop (String name,String address,String type){
+    public Shop (String name,Address address,List<String> types){
+        this.id = Shop.nextId++;
         this.name = name;
         this.address = address;
         this.productsList = new LinkedList<>();
-        this.type = type;
+        this.types = types;
         this.servicesList = new LinkedList<>();
         this.employeesList = new LinkedList<>();
+    }
+    public Shop(String name, Address address, String[] strings){
+        this(name,address,new LinkedList<String>());
+    }
+    // constructor overloading, create shop with empty list (przeładowanie konstruktora)
+
+    void createShop(String name, Address address, List<String> types){
+        this.name = name;
+        this.address = address;
+        this.types = types;
     }
 
     void addProduct(Product product, int quantity){

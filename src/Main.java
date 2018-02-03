@@ -1,9 +1,17 @@
 public class Main {
     public static void main(String[] args) {
-        Shop carrefour = new Shop("Carrefour","floor 2 stand 1","food");
-        Shop newyorker = new Shop("NewYorker","floor 1 stand 1","clothes");
-        Shop laundry = new Shop("Perfekt","floor 1 stand 2","service");
-        Shop beauty = new Shop("Twoj Styl","floor 2 stand 1","beauty");
+        ShoppingCenter galeriaRz = new ShoppingCenter("Galeria Rzeszowska", "Rzeszów");
+
+        Shop carrefour = new Shop("Carrefour", new Address(2,3), new String[]{"food"});
+        Shop newyorker = new Shop("NewYorker", new Address(1,1), new String[]{"clothes"});
+        Shop laundry = new Shop("Perfekt", new Address(1,2),new String[]{"service"});
+        Shop beauty = new Shop("Twoj Styl",new Address(2,1),new String[]{"beauty","hairdressing"});
+
+        galeriaRz.addShop(carrefour);
+        galeriaRz.addShop(newyorker);
+        galeriaRz.addShop(laundry);
+        galeriaRz.addShop(beauty);
+
         Product bananasCF = new Product(1,"food","banana",23);
         Product applesCF = new Product(0.3,"food","apple",23);
         Product blackPantiesSNY = new Product(15,"clothes", "black panties S", 23);
@@ -29,6 +37,7 @@ public class Main {
         beauty.addService(pedicure);
         beauty.addService(manicure);
 
+
         Employee adam = new Employee("Adam",new String[]{"laundry service"});
         Employee alek = new Employee("Alek",new String[]{"laundry service"});
         Employee monika = new Employee("Monika",new String[]{"hairdresser","beautician"});
@@ -41,7 +50,8 @@ public class Main {
 //        carrefour.printAllProducts();
 //        newyorker.printAllProducts();
 //        laundry.printAllServices();
-        laundry.printAllEmployees();
+//        laundry.printAllEmployees();
+        beauty.printAllEmployees();
 
     }
 }
