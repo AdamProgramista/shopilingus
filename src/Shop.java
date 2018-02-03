@@ -25,7 +25,7 @@ public class Shop {
     public Shop(String name, Address address, String[] strings){
         this(name,address,new LinkedList<String>());
     }
-    // przeładowanie konstruktora overloading - tworzy shop z pusta listą typów
+    // constructor overloading, create shop with empty list (przeładowanie konstruktora)
 
     void createShop(String name, Address address, List<String> types){
         this.name = name;
