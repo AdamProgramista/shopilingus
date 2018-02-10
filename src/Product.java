@@ -1,6 +1,6 @@
 public class Product {
     public double price;
-    private String type;
+    public String type;
     public String name;
     private double tax;
 

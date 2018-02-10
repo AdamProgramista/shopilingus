@@ -7,31 +7,27 @@ public class Shop {
 
     int id;
     String name;
-    Address address;
+    int floor;
+    int stand;
     List<ProductDetails> productsList;
     List<String> types;
     List<Service> servicesList;
     List<Employee> employeesList;
 
-    public Shop (String name,Address address,List<String> types){
+    public Shop (String name,int floor,int stand,List<String> types){
         this.id = Shop.nextId++;
         this.name = name;
-        this.address = address;
+        this.floor = floor;
+        this.stand = stand;
         this.productsList = new LinkedList<>();
         this.types = types;
         this.servicesList = new LinkedList<>();
         this.employeesList = new LinkedList<>();
     }
-    public Shop(String name, Address address, String[] strings){
-        this(name,address,new LinkedList<String>());
+    public Shop(String name, int floor,int stand, String[] strings){
+        this(name,floor,stand,Arrays.asList(strings));
     }
     // constructor overloading, create shop with empty list (przeładowanie konstruktora)
-
-    void createShop(String name, Address address, List<String> types){
-        this.name = name;
-        this.address = address;
-        this.types = types;
-    }
 
     void addProduct(Product product, int quantity){
 
@@ -45,6 +41,23 @@ public class Shop {
         return;
     }
 
+    public ProductDetails getProduct(int productId) {
+        return productsList.stream()
+                .filter(productDetails -> productDetails.id == productId)
+                .findFirst()
+                .orElse(null);
+    }
+
+    void deleteProduct(int productId){
+        productsList.remove(getProduct(productId));
+    }
+
+    void updateProduct(int productId, ProductDetails modifiedProduct, int quantity){
+        deleteProduct(productId);
+        modifiedProduct.id = productId;
+        addProduct(modifiedProduct.product, quantity);
+    }
+
     void addService (Service newService){
         boolean added = false;
         for(int i = 0; i<this.servicesList.size(); i++){
@@ -56,6 +69,25 @@ public class Shop {
             this.servicesList.add(newService);
         }
     }
+
+    public Service getService(int serviceId) {
+        return servicesList.stream()
+                .filter(service -> service.id == serviceId)
+                .findFirst()
+                .orElse(null);
+    }
+
+    void deleteService(int serviceId){
+        servicesList.remove(getService(serviceId));
+    }
+
+    void updateService(int serviceId, Service modifiedService){
+        deleteService(serviceId);
+        modifiedService.id = serviceId;
+        addService(modifiedService);
+    }
+
+
 
     void printAllProducts(){
         for (int i = 0; i<this.productsList.size(); i++){
@@ -82,11 +114,38 @@ public class Shop {
         }
     }
 
+    void hire(List<Employee>candidates){
+        for (int i=0; i<candidates.size(); i++){
+            Employee current = candidates.get(i);
+            this.employeesList.add(current);
+        }
+    }
+
     void hire(Employee candidate) {
         this.employeesList.add(candidate);
     }
 
-    void dismiss(Employee candidate) {
-        this.employeesList.remove(candidate);
+    void dismiss(int employeeId) {
+        this.employeesList.remove(getEmployee(employeeId));
     }
+
+    public Employee getEmployee(int employeeId) {
+        return employeesList.stream()
+                .filter(service -> service.id == employeeId)
+                .findFirst()
+                .orElse(null);
+    }
+
+    void updateEmployee(int employeeId, Employee modifiedEmployee){
+        dismiss(employeeId);
+        modifiedEmployee.id = employeeId;
+        hire(modifiedEmployee);
+    }
+
+
+    public int getNumberOfEmployees(){
+        int numberOfEmployees = this.employeesList.size();
+        return numberOfEmployees;
+    }
+
 }
